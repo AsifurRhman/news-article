@@ -23,7 +23,7 @@ export default function Post({ id, author, date, links, category, authorEmail, c
 
             <div className="mb-4">
 
-                Posted By : <span classname="font-bold">{author}</span> on {date}
+                Posted By : <span className="font-bold">{author}</span> on {date}
             </div>
 
             <div className="w-full h-72 relative">
@@ -52,17 +52,17 @@ export default function Post({ id, author, date, links, category, authorEmail, c
 
             }
             <h2>{title}</h2>
-            <p>{content}</p>
+            <p className="content">{content}</p>
             {
                 links && (
-                    <div>
+                    <div className="my-4 flex flex-col gap-3">
                     {links.map((link, i) => (
-                      <div key={i}>
+                      <div className="flex gap-2 items-center" key={i}>
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
                           <path strokeLinecap="round" strokeLinejoin="round" d="M13.19 8.688a4.5 4.5 0 0 1 1.242 7.244l-4.5 4.5a4.5 4.5 0 0 1-6.364-6.364l1.757-1.757m13.35-.622 1.757-1.757a4.5 4.5 0 0 0-6.364-6.364l-4.5 4.5a4.5 4.5 0 0 0 1.242 7.244" />
                         </svg>
                   
-                        <Link href={link}>{link}</Link>
+                        <Link className="link"href={link}>{link}</Link>
                       </div>
                     ))}
                   </div>

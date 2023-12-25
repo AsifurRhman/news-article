@@ -30,3 +30,15 @@ body{
 h1{
   @apply text-2xl font-bold;
 }
+
+h2{
+  @apply text-2xl font-bold my-4
+}
+
+p.content{
+  @apply leading-loose
+}
+
+.link{
+  @apply text-[#2d71a9] font-bold max-w-full overflow-hidden text-ellipsis
+}

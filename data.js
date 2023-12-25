@@ -41,7 +41,7 @@ export const postsData =
       "author": "Alex Johnson",
       "datepublished": "2023-03-10",
       "category": "Web Development",
-      "links": ["https://example.com/scalable-web-apps", "https://example.com/best-practices"],
+      "links": ["https://example.com/scalable-web-apps", "https://example.com/best-practicessssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss"],
       "thumbnail": ""
     },
     {
