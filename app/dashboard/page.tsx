@@ -1,14 +1,12 @@
-import CategoryList from '@/components/Category/CategoryList'
-import Post from '@/components/Post/Post'
+import React from 'react'
 import { postsData } from '@/data'
-import Image from 'next/image'
-
-export default function Home() {
+import Post from '@/components/Post/Post'
+import Link from 'next/link'
+export default function Dashboard() {
   return (
-    <>
-      <CategoryList />
-      
-      {
+      <div>
+        <h1>My Posts </h1>
+        {
         postsData && postsData.length > 0
       
           ?
@@ -28,10 +26,14 @@ export default function Home() {
             />))
            )
         : (
-          <div className="py-6">No Posts</div>
+          <div className = "py-6">No Posts Created Yet.
+ <Link className='underline' href={`/create-post`}>Create A Post</Link>
+                          
+          </div>
+         
         )
     
     }
-    </>
+          </div>
   )
 }

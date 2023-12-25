@@ -1,6 +1,7 @@
 import React from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
+import Delete from '../Delete/Delete'
 
 interface PostProps {
     id: string,
@@ -16,6 +17,10 @@ interface PostProps {
 
 
 export default function Post({ id, author, date, links, category, authorEmail, content, thumbnail, title }: PostProps) {
+
+
+    const isEditable = true;
+
   
     return (
 
@@ -67,6 +72,15 @@ export default function Post({ id, author, date, links, category, authorEmail, c
                     ))}
                   </div>
                   
+                )
+            }
+
+            {
+                isEditable && (
+                    <div className="flex gap-3 font-bold py-3 px-4 rounded-md bg-slate-400 w-fit">
+                        <Link href={`/edit-post/${id}`}>Edit</Link>
+                        <Delete/>
+                    </div>
                 )
             }
         </div>
