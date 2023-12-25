@@ -2,3 +2,27 @@
 @tailwind components;
 @tailwind utilities;
 
+body{
+  background-color: rgb(241, 241, 220);
+}
+::-webkit-scrollbar{
+  width:1rem !important
+}
+::-webkit-scrollbar-track{
+  background: linear-gradient(
+      45deg
+      ,#022C43,#3c0565);
+}
+::-webkit-scrollbar-thumb{
+  background: linear-gradient(
+      45deg
+      ,#5d04a1,#045580);
+  border:5px solid transparent;
+  border-radius: 9px;
+  background-clip: content-box;
+}
+
+.btn{
+  @apply bg-slate-300  px-4 py-2 rounded-md font-semibold hover:scale-105 transition
+
+}
