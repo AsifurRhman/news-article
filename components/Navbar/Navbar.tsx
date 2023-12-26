@@ -7,6 +7,7 @@ import React from 'react'
 
 import Image from "next/image";
 import { useState, useRef, useEffect } from "react";
+
 export default function Navbar() {
     const { status, data: session } = useSession();
     console.log(session, "data")
@@ -79,7 +80,7 @@ export default function Navbar() {
                             >
                                 Create Post
                             </Link>
-                            <button onClick={() => signOut()} className="btn">
+                            <button onClick={() => signOut()} className="btn text-red-700">
                                 Sign Out
                             </button>
                         </div>
