@@ -2,17 +2,34 @@
 
 "use client"
 
+import { TCategory } from '@/app/types/type'
 import { categoriesData } from '@/data'
 import Link from 'next/link'
-import React, { useState } from 'react'
-
+import { useRouter } from 'next/navigation'
+import React, { useEffect, useState } from 'react'
+import toast from "react-hot-toast";
 export default function CreatePost() {
 
     const [links, setLinks] = useState<string[]>([])
     const [linkInput, setLinkInput] = useState("")
+    const [title, setTitle] = useState("");
+    const [content, setContent] = useState("");
+    const [categories, setCategories] = useState<TCategory[]>([]);
+    const [selectedCategory, setSelectedCategory] = useState("");
+    const [imageUrl, setImageUrl] = useState("");
+    const [publicId, setPublicId] = useState("");
 
+    const router = useRouter();
 
-
+    useEffect(() => {
+      const fetchAllCategories = async () => {
+        const res = await fetch("api/categories");
+        const categoryNames = await res.json();
+        setCategories(categoryNames);
+      };
+  
+      fetchAllCategories();
+    }, []);
     const addLink = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
         e.preventDefault()
         if (linkInput.trim() !== "") {
@@ -24,11 +41,55 @@ export default function CreatePost() {
 const deleteLink =(index:number)=>{
     setLinks((prev)=>prev.filter((_,i)=> i !== index))
 }
+
+
+
+
+
+const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    if (!title || !content) {
+      const errorMessage = "Title and content are required";
+      toast.error(errorMessage);
+      return;
+    }
+
+    try {
+      const res = await fetch("api/posts/", {
+        method: "POST",
+        headers: {
+          "Content-type": "application/json",
+        },
+        body: JSON.stringify({
+          title,
+          content,
+          links,
+          selectedCategory,
+          imageUrl,
+          publicId,
+        }),
+      });
+
+      if (res.ok) {
+        toast.success("Post created successfully");
+        router.push("/dashboard");
+        router.refresh();
+      } else {
+        toast.error("Something went wrong.");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+
+    
     return (
         <div>
             <h2>Create A Post</h2>
 
-            <form className="flex flex-col gap-2">
+            <form onSubmit={handleSubmit} className="flex flex-col gap-2">
 
                 <input type="text" placeholder="title" />
                 <textarea className="" placeholder="content"> </textarea>
