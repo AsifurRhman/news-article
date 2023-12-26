@@ -2,6 +2,8 @@ import React from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import Delete from '../Delete/Delete'
+import { getServerSession } from 'next-auth'
+import { authOptions } from '@/app/api/auth/[...nextauth]/route'
 
 interface PostProps {
     id: string,
@@ -19,7 +21,9 @@ interface PostProps {
 export default function Post({ id, author, date, links, category, authorEmail, content, thumbnail, title }: PostProps) {
 
 
-    const isEditable = true;
+    const session = await getServerSession(authOptions);
+
+  const isEditable = session && session?.user?.email === authorEmail;
 
   
     return (

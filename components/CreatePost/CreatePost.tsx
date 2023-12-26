@@ -3,7 +3,7 @@
 "use client"
 
 import { TCategory } from '@/app/types/type'
-import { categoriesData } from '@/data'
+
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
@@ -14,7 +14,7 @@ export default function CreatePost() {
     const [linkInput, setLinkInput] = useState("")
     const [title, setTitle] = useState("");
     const [content, setContent] = useState("");
-    const [categories, setCategories] = useState<TCategory[]>([]);
+    const [categoriesData, setCategoriesData] = useState<TCategory[]>([]);
     const [selectedCategory, setSelectedCategory] = useState("");
     const [imageUrl, setImageUrl] = useState("");
     const [publicId, setPublicId] = useState("");
@@ -25,7 +25,7 @@ export default function CreatePost() {
       const fetchAllCategories = async () => {
         const res = await fetch("api/categories");
         const categoryNames = await res.json();
-        setCategories(categoryNames);
+        setCategoriesData(categoryNames);
       };
   
       fetchAllCategories();
@@ -91,8 +91,12 @@ const handleSubmit = async (e: React.FormEvent) => {
 
             <form onSubmit={handleSubmit} className="flex flex-col gap-2">
 
-                <input type="text" placeholder="title" />
-                <textarea className="" placeholder="content"> </textarea>
+       <input 
+      onChange={(e) => setTitle(e.target.value)}
+      type="text" placeholder = "title" />
+         <textarea
+    onChange={(e) => setContent(e.target.value)}
+    className="" placeholder = "content" > </textarea>
 
                 {
                     links && links.map((link, i) =>
@@ -134,19 +138,20 @@ const handleSubmit = async (e: React.FormEvent) => {
                     </button>
                 </div>
 
-                <select className="p-3 rounded-md border appearance-none">
+        <select     onChange={(e) => setSelectedCategory(e.target.value)}
+          className = "p-3 rounded-md border appearance-none" >
                     <option value="">Select A Category</option>
                     {
                         categoriesData && categoriesData.map(category =>
 
-                            <option key={category.id} value={category.name}>{category.name}</option>
+                            <option key={category.id} value={category.categoryName}>{category.categoryName}</option>
                         )
                     }
                 </select>
 
                 <button className="primary-btn">Create</button>
 
-                <div className="p-2 text-red-500 font-bold">Error Message</div>
+             
             </form>
         </div>
     )
