@@ -18,22 +18,35 @@ interface PostProps {
 }
 
 
-export default function Post({ id, author, date, links, category, authorEmail, content, thumbnail, title }: PostProps) {
+export default async function Post({ id, author, date, links, category, authorEmail, content, thumbnail, title }: PostProps) {
 
 
     const session = await getServerSession(authOptions);
 
   const isEditable = session && session?.user?.email === authorEmail;
 
-  
+  const dateObject = new Date(date);
+  const options: Intl.DateTimeFormatOptions = {
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+  };
+
+  const formattedDate = dateObject.toLocaleDateString("en-US", options);
     return (
 
         <div className ="my-4 border-b border-b-300 py-8">
 
-            <div className="mb-4">
-
-                Posted By : <span className="font-bold">{author}</span> on {date}
-            </div>
+        <div className="mb-4">
+        {author ? (
+          <>
+            Posted by: <span className="font-bold">{author}</span> on{" "}
+            {formattedDate}
+          </>
+        ) : (
+          <>Posted on {formattedDate}</>
+        )}
+      </div>
 
             <div className="w-full h-72 relative">
                 {thumbnail ? (
@@ -80,10 +93,10 @@ export default function Post({ id, author, date, links, category, authorEmail, c
             }
 
             {
-                isEditable && (
+                !author && (
                     <div className="flex gap-3 font-bold py-3 px-4 rounded-md bg-slate-400 w-fit">
                         <Link href={`/edit-post/${id}`}>Edit</Link>
-                        <Delete/>
+                        <Delete id={id} />
                     </div>
                 )
             }
