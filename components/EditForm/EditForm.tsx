@@ -31,7 +31,7 @@ console.log(  fetch(`${process.env.NEXTAUTH_URL}/api/categories`));
   
     useEffect(() => {
       const fetchAllCategories = async () => {
-        const res = await fetch(`${process.env.NEXTAUTH_URL}/api/categories`);
+        const res = await fetch("/api/categories");
         const categoryNames = await res.json();
         setCategories(categoryNames);
         console.log(categoryNames,"categoryNames");
@@ -190,7 +190,7 @@ const handleSubmit = async (e: React.FormEvent) => {
 
              
                   </form>
-                  {selectedCategory}
+                  
         </div>
     )
 }
