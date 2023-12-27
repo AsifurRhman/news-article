@@ -1,35 +1,64 @@
 
 
+
 "use client"
 
-import { TCategory } from '@/app/types/type'
+import { TCategory, TPost } from '@/app/types/type'
 
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
 import toast from "react-hot-toast";
-export default function CreatePost() {
+
+
+
+export default function EditForm({ post }: { post: TPost }) {
 
     const [links, setLinks] = useState<string[]>([])
     const [linkInput, setLinkInput] = useState("")
     const [title, setTitle] = useState("");
     const [content, setContent] = useState("");
-    const [categoriesData, setCategoriesData] = useState<TCategory[]>([]);
+    const [categories, setCategories] = useState<TCategory[]>([]);
     const [selectedCategory, setSelectedCategory] = useState("");
     const [imageUrl, setImageUrl] = useState("");
     const [publicId, setPublicId] = useState("");
-
+console.log(selectedCategory,"selectedCategory");
     const router = useRouter();
 
+console.log(  fetch(`${process.env.NEXTAUTH_URL}/api/categories`));
+
+  
+  
     useEffect(() => {
       const fetchAllCategories = async () => {
-        const res = await fetch("api/categories");
+        const res = await fetch(`${process.env.NEXTAUTH_URL}/api/categories`);
         const categoryNames = await res.json();
-         setCategoriesData(categoryNames);
+        setCategories(categoryNames);
+        console.log(categoryNames,"categoryNames");
       };
-  
+  console.log(categories,"categories");
       fetchAllCategories();
-    }, []);
+
+
+      const initValues = () => {
+        setTitle(post.title);
+        setContent(post.content);
+        setImageUrl(post.imageUrl || "");
+        setPublicId(post.publicId || "");
+        setSelectedCategory(post.categoryName || "");
+        setLinks(post.links || []);
+      };
+
+      initValues();
+    }, [
+      post.title,
+      post.content,
+      post.imageUrl,
+      post.publicId,
+      post.categoryName,
+      post.links,]);
+
+  
     const addLink = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
         e.preventDefault()
         if (linkInput.trim() !== "") {
@@ -56,8 +85,8 @@ const handleSubmit = async (e: React.FormEvent) => {
     }
 
     try {
-      const res = await fetch("api/posts/", {
-        method: "POST",
+      const res = await fetch(`/api/posts/${post.id}`, {
+        method: "PUT",
         headers: {
           "Content-type": "application/json",
         },
@@ -72,11 +101,11 @@ const handleSubmit = async (e: React.FormEvent) => {
       });
 
       if (res.ok) {
-        toast.success("Post created successfully");
+        toast.success("Post edited successfully");
         router.push("/dashboard");
         router.refresh();
       } else {
-        toast.error("Something went wrong.");
+        toast.error("Something went wrong.Please check");
       }
     } catch (error) {
       console.log(error);
@@ -87,16 +116,21 @@ const handleSubmit = async (e: React.FormEvent) => {
     
     return (
         <div>
-            <h2>Create A Post</h2>
+            <h2>Edit The Post</h2>
 
             <form onSubmit={handleSubmit} className="flex flex-col gap-2">
 
        <input 
       onChange={(e) => setTitle(e.target.value)}
-      type="text" placeholder = "title" />
+  type = "text" placeholder = "title"
+    
+  value={title}
+    />
          <textarea
     onChange={(e) => setContent(e.target.value)}
-    className="" placeholder = "content" > </textarea>
+    className="" placeholder = "content" 
+    value={content}
+      > </textarea>
 
                 {
                     links && links.map((link, i) =>
@@ -138,21 +172,25 @@ const handleSubmit = async (e: React.FormEvent) => {
                     </button>
                 </div>
 
-        <select     onChange={(e) => setSelectedCategory(e.target.value)}
-          className = "p-3 rounded-md border appearance-none" >
-                    <option value="">Select A Category</option>
-                    {
-                        categoriesData && categoriesData.map(category =>
+                <select
+                onChange={(e) => setSelectedCategory(e.target.value)}
+                className="p-3 rounded-md border appearance-none"
+                value={selectedCategory}
+              >
+                <option value="">Select A Category</option>
+                {categories &&
+                  categories.map((category) => (
+                    <option key={category.id} value={category.categoryName}>
+                      {category.categoryName}
+                    </option>
+                  ))}
+              </select>
 
-                            <option key={category.id} value={category.categoryName}>{category.categoryName}</option>
-                        )
-                    }
-                </select>
-
-                <button className="primary-btn">Create</button>
+                <button className="primary-btn">Update</button>
 
              
-            </form>
+                  </form>
+                  {selectedCategory}
         </div>
     )
 }

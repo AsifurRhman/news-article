@@ -1,14 +1,13 @@
-import prisma from '@/db/prismaDb';
-import { NextResponse } from 'next/server'
-import React from 'react'
+import prisma from "@/db/prismaDb";
+import { NextResponse } from "next/server";
 
-export async function GET(request: Request) {
+
+export async function GET() {
   try {
-   
-const categories=await prisma.category.findMany({})
-return NextResponse.json(categories)
+    const categories = await prisma.category.findMany();
+    return NextResponse.json(categories);
   } catch (error) {
     console.log(error);
-    return NextResponse.json({message : "SomeThing Went Wrong !!"})
- }
+    return NextResponse.json("Something went wrong");
+  }
 }

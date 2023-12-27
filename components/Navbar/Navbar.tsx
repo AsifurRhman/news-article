@@ -10,7 +10,7 @@ import { useState, useRef, useEffect } from "react";
 
 export default function Navbar() {
     const { status, data: session } = useSession();
-    console.log(session, "data")
+    // console.log(session, "data")
     const [isPopupVisible, setIsPopupVisible] = useState(false);
     const popupRef = useRef<HTMLDivElement | null>(null);
 

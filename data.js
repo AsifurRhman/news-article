@@ -1,14 +1,14 @@
 export const categoriesData = [
-        { "id": 1, "name": "Artificial Intelligence" },
-        { "id": 2, "name": "Programming" },
-        { "id": 3, "name": "Web Development" },
-        { "id": 4, "name": "Cybersecurity" },
-        { "id": 5, "name": "Data Science" },
-        { "id": 6, "name": "Machine Learning" },
-        { "id": 7, "name": "Mobile App Development" },
-        { "id": 8, "name": "Cloud Computing" },
-        { "id": 9, "name": "Internet of Things (IoT)" },
-        { "id": 10, "name": "Blockchain" }
+        { "id": 1, "categoryName": "Artificial-Intelligence" },
+        { "id": 2, "categoryName": "Programming" },
+        { "id": 3, "categoryName": "Web-Development" },
+        { "id": 4, "categoryName": "Cybersecurity" },
+        { "id": 5, "categoryName": "Data Science" },
+        { "id": 6, "categoryName": "Machine Learning" },
+        { "id": 7, "categoryName": "Mobile App Development" },
+        { "id": 8, "categoryName": "Cloud Computing" },
+        { "id": 9, "categoryName": "Internet of Things (IoT)" },
+        { "id": 10, "categoryName": "Blockchain" }
       ]
       
 

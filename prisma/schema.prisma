@@ -79,6 +79,6 @@ model Category{
     id  String  @id @default(auto()) @map("_id") @db.ObjectId
      categoryName String @unique
      posts Post[]
-     postId  String @db.ObjectId
+     postID String[] @db.ObjectId
 
 }
