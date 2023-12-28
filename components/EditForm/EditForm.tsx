@@ -9,6 +9,8 @@ import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
 import toast from "react-hot-toast";
+import { CldUploadButton, CldUploadWidgetResults } from 'next-cloudinary';
+import Image from 'next/image'
 
 
 
@@ -111,7 +113,38 @@ const handleSubmit = async (e: React.FormEvent) => {
       console.log(error);
     }
   };
+  const handleImageUpload = (result: CldUploadWidgetResults) => {
+    console.log("result: ", result);
+     const info = result.info as object;
 
+    if ("secure_url" in info && "public_id" in info) {
+      const url = info.secure_url as string;
+      const public_id = info.public_id as string;
+      setImageUrl(url);
+      setPublicId(public_id);
+      console.log("url: ", url);
+      console.log("public_id: ", public_id);
+    }
+  };
+  const removeImage = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    try {
+      const res = await fetch("/api/removeImage", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ publicId }),
+      });
+
+      if (res.ok) {
+        toast.success("Thumbnail Remove successed")
+        setImageUrl("");
+        setPublicId("");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
     
     return (
@@ -171,7 +204,39 @@ const handleSubmit = async (e: React.FormEvent) => {
                         </svg>
                     </button>
                 </div>
-
+                <CldUploadButton
+                onUpload={handleImageUpload}
+              uploadPreset = {process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET}
+              className = {`h-72 border-2 mt-4 border-dotted grid place-items-center bg-slate-100 rounded-md relative ${
+                imageUrl && "pointer-events-none"
+              }`} >
+                           <div>
+                           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+                <path strokeLinecap="round" strokeLinejoin="round" d="m2.25 15.75 5.159-5.159a2.25 2.25 0 0 1 3.182 0l5.159 5.159m-1.5-1.5 1.409-1.409a2.25 2.25 0 0 1 3.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 0 0 1.5-1.5V6a1.5 1.5 0 0 0-1.5-1.5H3.75A1.5 1.5 0 0 0 2.25 6v12a1.5 1.5 0 0 0 1.5 1.5Zm10.5-11.25h.008v.008h-.008V8.25Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z" />
+              </svg>
+              
+                  </div>
+                  
+                  {imageUrl && (
+                    <Image
+                      src={imageUrl}
+                      fill
+                      className="absolute object-cover inset-0"
+                      alt={title}
+                    />
+                  )}
+                                </CldUploadButton>
+                                {publicId && (
+                                  <button
+                                    onClick={removeImage}
+                                    className="py-2 px-4 rounded-md font-bold w-fit  bg-slate-200 mb-4"
+                                  >
+                                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-12 h-8">
+                                  <path stroke-linecap="round" stroke-linejoin="round" d="m20.25 7.5-.625 10.632a2.25 2.25 0 0 1-2.247 2.118H6.622a2.25 2.25 0 0 1-2.247-2.118L3.75 7.5m6 4.125 2.25 2.25m0 0 2.25 2.25M12 13.875l2.25-2.25M12 13.875l-2.25 2.25M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125Z" />
+                                </svg>
+                                
+                                  </button>
+                                )}
                 <select
                 onChange={(e) => setSelectedCategory(e.target.value)}
                 className="p-3 rounded-md border appearance-none"

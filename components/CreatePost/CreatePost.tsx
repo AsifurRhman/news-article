@@ -173,7 +173,7 @@ const handleSubmit = async (e: React.FormEvent) => {
   <CldUploadButton
   onUpload={handleImageUpload}
 uploadPreset = {process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET}
-className = {`h-48 border-2 mt-4 border-dotted grid place-items-center bg-slate-100 rounded-md relative ${
+className = {`h-72 border-2 mt-4 border-dotted grid place-items-center bg-slate-100 rounded-md relative ${
   imageUrl && "pointer-events-none"
 }`} >
              <div>
@@ -195,9 +195,9 @@ className = {`h-48 border-2 mt-4 border-dotted grid place-items-center bg-slate-
                   {publicId && (
                     <button
                       onClick={removeImage}
-                      className="py-2 px-4 rounded-md font-bold w-fit  bg-black text-white mb-4"
+                      className="py-2 px-4 rounded-md font-bold w-fit  bg-slate-200 mb-4"
                     >
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-6 h-6">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-12 h-8">
                     <path stroke-linecap="round" stroke-linejoin="round" d="m20.25 7.5-.625 10.632a2.25 2.25 0 0 1-2.247 2.118H6.622a2.25 2.25 0 0 1-2.247-2.118L3.75 7.5m6 4.125 2.25 2.25m0 0 2.25 2.25M12 13.875l2.25-2.25M12 13.875l-2.25 2.25M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125Z" />
                   </svg>
                   
