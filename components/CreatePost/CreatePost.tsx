@@ -191,7 +191,9 @@ className = {`h-72 border-2 mt-4 border-dotted grid place-items-center bg-slate-
         alt={title}
       />
     )}
-                  </CldUploadButton>
+          </CldUploadButton>
+          
+          
                   {publicId && (
                     <button
                       onClick={removeImage}
