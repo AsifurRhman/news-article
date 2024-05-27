@@ -5,20 +5,15 @@
 body{
   background-color: rgb(241, 241, 220);
 }
-::-webkit-scrollbar{
-  width:1rem !important
+::-webkit-scrollbar {
+  width: 0.8rem !important;
 }
-::-webkit-scrollbar-track{
-  background: linear-gradient(
-      45deg
-      ,#022C43,#3c0565);
-}
-::-webkit-scrollbar-thumb{
-  background: linear-gradient(
-      45deg
-      ,#5d04a1,#045580);
-  border:5px solid transparent;
-  border-radius: 9px;
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(45deg, #cca89c, #ca9a8a);
+  border: 1px solid transparent; /* Adjust this value to change the height */
+  padding: 1px 0 !important;
+  border-radius: 15px;
   background-clip: content-box;
 }
 
